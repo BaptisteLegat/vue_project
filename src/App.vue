@@ -1,40 +1,33 @@
-<template>
-  <div>
-    <Header></Header>
-    <main>
-      <Card v-for="product in products" :key="product.id" :product="product"></Card>
-    </main>
-  </div>
-</template>
-
 <script>
-import Header from './components/Header.vue';
-import Card from "./components/Card.vue";
-import { fetchProducts } from "./stores/api.js";
+import Home from './components/Home.vue'
+import About from './components/About.vue'
+
+const routes = {
+  '/': Home,
+  '/about': About
+}
 
 export default {
-  components: {
-    Card,
-    Header,
-  },
   data() {
     return {
-      products: []
-    };
+      currentPath: window.location.hash
+    }
+  },
+  computed: {
+    currentView() {
+      return routes[this.currentPath.slice(1) || '/'] || NotFound
+    }
   },
   mounted() {
-    this.fetchProducts();
-  },
-  methods: {
-    fetchProducts() {
-      fetchProducts()
-        .then(products => {
-          this.products = products;
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
+    window.addEventListener('hashchange', () => {
+      this.currentPath = window.location.hash
+    })
   }
 }
 </script>
+
+<template>
+  <a href="/">Home</a>
+  <a href="/about">About</a>
+  <component :is="currentView" />
+</template>
