@@ -1,29 +1,40 @@
 <template>
   <div>
     <Header></Header>
-    <!-- Le reste du contenu de votre application -->
-  </div>
-  <div>
-      <card></card>
+    <main>
+      <Card v-for="product in products" :key="product.id" :product="product"></Card>
+    </main>
   </div>
 </template>
 
-
-<style scoped>
-
-main {
-  margin: 0 auto;
-  max-width: 1200px;
-}
-</style>
 <script>
-import Header from './components/Header.vue'
-import Card from "@/components/Card.vue";
+import Header from './components/Header.vue';
+import Card from "./components/Card.vue";
+import { fetchProducts } from "./stores/api.js";
 
 export default {
   components: {
-      Card,
+    Card,
     Header,
+  },
+  data() {
+    return {
+      products: []
+    };
+  },
+  mounted() {
+    this.fetchProducts();
+  },
+  methods: {
+    fetchProducts() {
+      fetchProducts()
+        .then(products => {
+          this.products = products;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
   }
 }
 </script>
