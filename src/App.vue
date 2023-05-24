@@ -15,7 +15,7 @@ export default {
   },
   computed: {
     currentView() {
-      return routes[this.currentPath.slice(1) || '/'] || NotFound
+      return routes[this.currentPath.slice(1) || '/']
     }
   },
   mounted() {

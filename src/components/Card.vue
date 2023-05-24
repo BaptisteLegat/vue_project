@@ -1,41 +1,48 @@
 <template>
-    <div class="container">
-      <div class="card border-dark mb-3">
-        <img :src="product.image" :alt="product.title" />
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-9">
-              <h4 class="card-title">{{ product.title }}</h4>
+    <div class="container text-center">
+        <div class="card border-dark mb-3">
+            <img :src="product.image" :alt="product.title" class="card-image"/>
+            <div class="card-body">
+                <h5 class="card-title text-truncate">{{ product.title }}</h5>
+                <div class="row">
+                    <div class="col">
+                        <p class="card-text font-weight-bold">Nike</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col p-lg-2">
+                        <p class=""> {{Math.round(product.price)}} €</p>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-3">
-              <p> {{product.price}} €</p>
-            </div>
-          </div>
-          <p class="card-text">Nike</p>
         </div>
-      </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'Card',
+</template>
+
+<style scoped>
+
+.card-image {
+    height: 300px;
+    object-fit: cover;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.border-dark {
+    max-height: 30rem;
+    max-width: 28rem;
+    margin: 0 auto;
+}
+</style>
+
+<script>
+export default {
+    name: "Card",
     props: {
-      product: {
+        product: {
         type: Object,
         required: true
-      }
+        }
     }
-  };
-  </script>
-  
-  <style scoped>
-  .card-text {
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .border-dark {
-    max-width: 20rem;
-  }
-  </style>
+};
+</script>

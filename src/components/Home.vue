@@ -1,11 +1,19 @@
 <template>
   <div>
     <Header></Header>
-    <main>
+    <body class="card-grid">
       <Card v-for="product in products" :key="product.id" :product="product"></Card>
-    </main>
+    </body>
   </div>
 </template>
+
+<style>
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+}
+</style>
 
 <script>
 
