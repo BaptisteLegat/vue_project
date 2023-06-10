@@ -13,6 +13,7 @@
                     <div class="col p-lg-2">
                         <p class=""> {{Math.round(product.price)}} €</p>
                     </div>
+                    <a href="/detailProduct" class="stretched-link"></a>
                 </div>
             </div>
         </div>
@@ -37,7 +38,7 @@
 
 <script>
 export default {
-    name: "Card",
+    name: "myCard",
     props: {
         product: {
         type: Object,
