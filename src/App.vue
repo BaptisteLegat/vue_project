@@ -1,33 +1,29 @@
-<script>
-import Home from './components/Home.vue'
-import About from './components/About.vue'
+<template>
+    <div id="app">
+        <Header></Header>
 
-const routes = {
-  '/': Home,
-  '/about': About
-}
+        <router-view></router-view>
+    </div>
+</template>
+
+<script>
+
+
+import Header from "@/components/Header.vue";
 
 export default {
-  data() {
-    return {
-      currentPath: window.location.hash
+    name: 'App',
+    components: {
+        Header
+
+    },
+    data(){
+        return{
+        };
     }
-  },
-  computed: {
-    currentView() {
-      return routes[this.currentPath.slice(1) || '/']
-    }
-  },
-  mounted() {
-    window.addEventListener('hashchange', () => {
-      this.currentPath = window.location.hash
-    })
-  }
-}
+};
 </script>
 
-<template>
-  <a href="/">Home</a>
-  <a href="/about">About</a>
-  <component :is="currentView" />
-</template>
+<style>
+/* Styles spécifiques à App.vue */
+</style>

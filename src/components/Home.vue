@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header></Header>
     <body class="card-grid">
       <Card v-for="product in products" :key="product.id" :product="product"></Card>
     </body>
@@ -17,7 +16,7 @@
 
 <script>
 
-import Card from "./Card.vue";
+import Card from "./myCard.vue";
 import Header from "./Header.vue";
 import { fetchProducts } from "../stores/api";
 
