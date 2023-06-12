@@ -6,12 +6,12 @@
                 <h5 class="card-title text-truncate">{{ product.name }}</h5>
                 <div class="row">
                     <div class="col">
-                        <p class="card-text font-weight-bold">Nike</p>
+                        <p class="card-text font-weight-bold">Couleur : {{ product.color.name }}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col p-lg-2">
-                        <p class=""> {{Math.round(product.price)}} €</p>
+                        <p class="">Taille : {{ product.size.label }}</p>
                     </div>
                     <a href="/detailProduct" class="stretched-link"></a>
                 </div>
