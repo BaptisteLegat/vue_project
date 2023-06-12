@@ -30,8 +30,8 @@
 </template>
 
 <style scoped>
-.card-image {
-}
+/* .card-image {
+} */
 
 </style>
 

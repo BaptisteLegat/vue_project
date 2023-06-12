@@ -37,9 +37,11 @@ export default {
   methods: {
     fetchProducts() {
       fetchProducts()
-        .then(products => {
-          this.products = products;
-        })
+        .then(response => {
+            const ValidProducts = response['hydra:member'].map(item => item); // ajustez cette ligne en fonction des données que vous souhaitez extraire
+            this.products = ValidProducts;
+            console.log(this.products);
+            })
         .catch(error => {
           console.error(error);
         });

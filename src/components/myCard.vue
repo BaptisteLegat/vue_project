@@ -3,7 +3,7 @@
         <div class="card border-dark mb-3">
             <img :src="product.image" :alt="product.title" class="card-image"/>
             <div class="card-body">
-                <h5 class="card-title text-truncate">{{ product.title }}</h5>
+                <h5 class="card-title text-truncate">{{ product.name }}</h5>
                 <div class="row">
                     <div class="col">
                         <p class="card-text font-weight-bold">Nike</p>
