@@ -118,6 +118,8 @@ export default {
           colors: this.selectedColors,
           sizes: this.selectedSizes
         });
+      this.$emit('page-updated', this.currentPage);
+      this.$emit('page-change', 1);
       }
     },
     loadProducts() {

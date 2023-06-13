@@ -12,6 +12,7 @@
           <div class="row m-2">
             <div class="col">
               <p class="card-text font-weight-bold">Couleur : {{ product.color.name }}</p>
+              <p class="card-text font-weight-bold">Taille : {{ product.size.label }}</p>
             </div>
           </div>
         </v-card-text>

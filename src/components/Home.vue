@@ -1,7 +1,6 @@
-Copy code
 <template>
   <div class="content-container">
-    <Filter @color-selected="updateSelectedColor"></Filter>
+    <Filter @color-selected="updateSelectedColor" @page-change="handlePageChange"></Filter>    
     <v-row class="card-grid">
       <template v-if="filteredProducts.length > 0">
         <Card v-for="product in filteredProducts" :key="product.id" :product="product"></Card>
@@ -12,6 +11,7 @@ Copy code
         </div>
       </template>
     </v-row>
+    <Pagination class="p-4" :current-page="currentPage" :total-pages="Number(totalPages)" @page-click="handlePaginationClick"></Pagination>
   </div>
 </template>
 
@@ -50,12 +50,14 @@ Copy code
 import Card from "./myCard.vue";
 import { fetchProducts } from "../stores/api";
 import Filter from "./Filter.vue";
+import Pagination from "./Pagination.vue";
 
 export default {
   name: "Home",
   components: {
     Card,
     Filter,
+    Pagination,
   },
   data() {
     return {
@@ -63,20 +65,26 @@ export default {
       selectedColor: '',
       selectedSize: '',
       searchQuery: '',
+      currentPage: 1,
+      totalPages: 1, 
+      itemsPerPage: 12,
     };
   },
   computed: {
     filteredProducts() {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
       if (this.selectedColor === '' && this.selectedSize === '' && this.searchQuery === '') {
-        return this.products;
+
+        return this.products.slice(startIndex, endIndex);
       } else {
-        return this.products.filter(product => {
+        return this.products.slice(startIndex,endIndex).filter(product => {
           const selectedColors = this.selectedColor;
           const selectedSizes = this.selectedSize;
           const colorMatch = selectedColors.length === 0 || selectedColors.some(colorId => product.color["@id"] === `/api/colors/${colorId}`);
           const sizeMatch = selectedSizes.length === 0 || selectedSizes.some(sizeId => product.size["@id"] === `/api/sizes/${sizeId}`);
           const searchQueryMatch = this.searchQuery === '' || product.name.toLowerCase().includes(this.searchQuery.toLowerCase());
-          console.log(searchQueryMatch);
+         
           return colorMatch && sizeMatch && searchQueryMatch;
         });
       }
@@ -90,6 +98,7 @@ export default {
       fetchProducts()
         .then(response => {
           this.products = response['hydra:member'].map(item => item);
+          this.totalPages = parseInt(response['hydra:view']['hydra:last'].split('page=')[1]);
         })
         .catch(error => {
           console.error(error);
@@ -103,6 +112,26 @@ export default {
     performSearch(searchQuery) {
       this.searchQuery = searchQuery;
     },
+    updatePage(page) {
+      this.$emit('update-page', page);
+    },
+    handlePageChange(page) {
+      this.currentPage = page;
+      this.fetchProducts();
+    },
+    scrollToTop() {
+    const scrollToTop = () => {
+      if (document.documentElement.scrollTop > 0) {
+        window.requestAnimationFrame(scrollToTop);
+        window.scrollTo(0, document.documentElement.scrollTop - (document.documentElement.scrollTop / 8));
+      }
+    };
+    scrollToTop();
+  },
+  handlePaginationClick(pageNumber) {
+    this.currentPage = pageNumber;
+    this.scrollToTop();
+  },
   }
 }
 </script>
