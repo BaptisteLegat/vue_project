@@ -1,28 +1,28 @@
 <template>
   <div class="text-center">
-    <label>Filtrer par couleur :</label>
-    <div class="color-buttons d-flex justify-content-center flex-wrap mb-3">
-      <button
+    <v-label>Filtrer par couleur :</v-label>
+    <v-row class="color-buttons d-flex justify-content-center flex-wrap mb-3">
+      <v-btn
         v-for="color in uniqueColors"
         :key="color.id"
-        :class="['btn', 'btn-color', 'me-2', 'mb-2', { 'active': isSelectedColor(color.id) }]"
+        :class="['btn-color', 'me-2', 'mb-2', { 'active': isSelectedColor(color.id) }]"
         @click="toggleColor(color.id)"
       >
-        <div class="color-circle d-inline-block me-1" :style="{ backgroundColor: color.name }"></div>
+        <v-chip class="color-circle d-inline-block me-1" :style="{ backgroundColor: color.name }"></v-chip>
         {{ color.name }}
-      </button>
-    </div>
-    <label>Filtrer par taille :</label>
-    <div class="size-buttons d-flex justify-content-center flex-wrap mb-3">
-      <button
+      </v-btn>
+    </v-row>
+    <v-label>Filtrer par taille :</v-label>
+    <v-row class="size-buttons d-flex justify-content-center flex-wrap mb-3">
+      <v-btn
         v-for="size in uniqueSizes"
         :key="size.id"
-        :class="['btn', 'btn-size', 'me-2', 'mb-2', { 'active': isSelectedSize(size.id) }]"
+        :class="['btn-size', 'me-2', 'mb-2', { 'active': isSelectedSize(size.id) }]"
         @click="toggleSize(size.id)"
       >
         {{ size.label }}
-      </button>
-    </div>
+      </v-btn>
+    </v-row>
   </div>
 </template>
 
@@ -48,11 +48,12 @@
 }
 
 .color-circle {
-  width: 12px;
-  height: 12px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   display: inline-block;
-  vertical-align: middle;
+  border: 1px solid #e2e2e2;
+  margin-right: 5px;
 }
 </style>
 

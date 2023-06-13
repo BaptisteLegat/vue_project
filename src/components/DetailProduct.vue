@@ -23,9 +23,6 @@
             <div class="card-footer text-muted">
                 2 days ago
             </div>
-            <v-btn>
-                Button
-            </v-btn>
         </div>
     </div>
 

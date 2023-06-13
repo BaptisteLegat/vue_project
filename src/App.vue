@@ -1,10 +1,10 @@
 <template>
     <v-app id="app">
-        <Header></Header>
-
-        <router-view></router-view>
+      <Header></Header>
+  
+      <router-view></router-view>
     </v-app>
-</template>
+  </template>
 
 <script>
 

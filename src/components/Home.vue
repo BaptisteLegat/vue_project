@@ -1,16 +1,18 @@
 <template>
-<div>
-  <Filter @color-selected="updateSelectedColor"></Filter>
-  <div class="card-grid">
-    <Card v-for="product in filteredProducts" :key="product.id" :product="product"></Card>
-    <div v-if="filteredProducts.length === 0 && products.length !== 0" class="no-results-message">Aucun produit correspondant aux couleurs sélectionnées.</div>
+  <div class="content-container">
+    <Filter @color-selected="updateSelectedColor"></Filter>
+    <v-row class="card-grid">
+      <Card v-for="product in filteredProducts" :key="product.id" :product="product"></Card>
+      <v-col v-if="filteredProducts.length === 0 && products.length !== 0" cols="12" class="no-results-message">Aucun produit correspondant aux couleurs sélectionnées.</v-col>
+    </v-row>
+    <v-row v-if="products.length === 0" class="no-results-message">Aucun produit disponible.</v-row>
   </div>
-  <div v-if="products.length === 0" class="no-results-message">Aucun produit disponible.</div>
-</div>
 </template>
 
 <style>
-
+.content-container {
+  margin-top: 75px;
+}
 .card-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
