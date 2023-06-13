@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import DetailProduct from "@/components/DetailProduct.vue";
 const routes = [
     {
         path: "/",
@@ -6,9 +7,9 @@ const routes = [
         component: () => import("../components/Home.vue")
     },
     {
-        path: "/detailProduct",
+        path: "/detailProduct/:id",
         name: "DetailProduct",
-        component: () => import("../components/DetailProduct.vue")
+        component: DetailProduct
     }
 ];
 

@@ -1,6 +1,6 @@
 <template>
     <div class="container text-center">
-        <div class="card border-dark mb-3">
+        <div class="card border-dark mb-3" @click="detailArticle(product.id)">
             <img :src="product.image" :alt="product.title" class="card-image"/>
             <div class="card-body">
                 <h5 class="card-title text-truncate">{{ product.name }}</h5>
@@ -13,7 +13,6 @@
                     <div class="col p-lg-2">
                         <p class="">Taille : {{ product.size.label }}</p>
                     </div>
-                    <a href="/detailProduct" class="stretched-link"></a>
                 </div>
             </div>
         </div>
@@ -41,9 +40,14 @@ export default {
     name: "myCard",
     props: {
         product: {
-        type: Object,
-        required: true
+            type: Object,
+            required: true
         }
+    },
+    methods: {
+        detailArticle(id) {
+            this.$router.push({name: 'DetailProduct', params: {id}});
+        },
     }
-};
+}
 </script>
