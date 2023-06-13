@@ -23,6 +23,9 @@
             <div class="card-footer text-muted">
                 2 days ago
             </div>
+            <v-btn>
+                Button
+            </v-btn>
         </div>
     </div>
 
@@ -34,10 +37,13 @@
     text-align: center;
     font-weight: bold;
     margin-top: 20px;
-
+}
 .card-text{
     text-align: center;
 }
+.card-image{
+    width: 100%;
+    height: 100%;
 }
 </style>
 
