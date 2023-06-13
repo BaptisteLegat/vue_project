@@ -1,7 +1,7 @@
 <template>
     <v-app id="app">
-      <Header></Header>
-  
+      <Header @search="performSearch"></Header>
+
       <router-view></router-view>
     </v-app>
   </template>
@@ -14,12 +14,9 @@ import Header from "@/components/Header.vue";
 export default {
     name: 'App',
     components: {
-        Header
+        Header,
     },
-    data(){
-        return{
-        };
-    }
+    
 };
 </script>
 

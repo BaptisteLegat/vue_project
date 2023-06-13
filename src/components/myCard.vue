@@ -31,6 +31,7 @@
     max-height: 30rem;
     max-width: 28rem;
     margin: 0 auto;
+    border: 1px solid #e2e2e2;
 }
 </style>
 

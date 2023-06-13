@@ -2,7 +2,7 @@
   <div class="content-container">
     <Filter @color-selected="updateSelectedColor"></Filter>
     <v-row class="card-grid">
-      <Card v-for="product in filteredProducts" :key="product.id" :product="product"></Card>
+      <Card class="mt-5" v-for="product in filteredProducts" :key="product.id" :product="product"></Card>
       <v-col v-if="filteredProducts.length === 0 && products.length !== 0" cols="12" class="no-results-message">Aucun produit correspondant aux couleurs sélectionnées.</v-col>
     </v-row>
     <v-row v-if="products.length === 0" class="no-results-message">Aucun produit disponible.</v-row>
@@ -28,7 +28,6 @@
 
 <script>
 import Card from "./myCard.vue";
-import Header from "./Header.vue";
 import { fetchProducts } from "../stores/api";
 import Filter from "./Filter.vue";
 
@@ -36,7 +35,6 @@ export default {
   name: "Home",
   components: {
     Card,
-    Header,
     Filter,
   },
   data() {
@@ -44,19 +42,22 @@ export default {
       products: [],
       selectedColor: '',
       selectedSize: '',
+      searchQuery: '',
     };
   },
   computed: {
     filteredProducts() {
-      if (this.selectedColor === '' && this.selectedSize === '') {
+      if (this.selectedColor === '' && this.selectedSize === '' && this.searchQuery === '') {
         return this.products;
       } else {
         return this.products.filter(product => {
-          const selectedColors = this.selectedColor instanceof Array ? this.selectedColor : [this.selectedColor];
-          const selectedSizes = this.selectedSize instanceof Array ? this.selectedSize : [this.selectedSize];
+          const selectedColors = this.selectedColor;
+          const selectedSizes = this.selectedSize;
           const colorMatch = selectedColors.length === 0 || selectedColors.some(colorId => product.color["@id"] === `/api/colors/${colorId}`);
           const sizeMatch = selectedSizes.length === 0 || selectedSizes.some(sizeId => product.size["@id"] === `/api/sizes/${sizeId}`);
-          return colorMatch && sizeMatch;
+          const searchQueryMatch = this.searchQuery === '' || product.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+          console.log(searchQueryMatch);
+          return colorMatch && sizeMatch && searchQueryMatch;
         });
       }
     },
@@ -68,8 +69,7 @@ export default {
     fetchProducts() {
       fetchProducts()
         .then(response => {
-          const ValidProducts = response['hydra:member'].map(item => item);
-          this.products = ValidProducts;
+          this.products = response['hydra:member'].map(item => item);
         })
         .catch(error => {
           console.error(error);
@@ -79,6 +79,9 @@ export default {
       const { colors, sizes } = selections;
       this.selectedColor = colors;
       this.selectedSize = sizes;
+    },
+    performSearch(searchQuery) {
+      this.searchQuery = searchQuery;
     },
   }
 }
