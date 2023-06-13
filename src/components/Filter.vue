@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <v-label>Filtrer par couleur :</v-label>
+    <p color="black" class="p-3">Filtrer par couleur :</p>
     <v-row class="color-buttons d-flex justify-content-center flex-wrap mb-3">
       <v-btn
         v-for="color in uniqueColors"
@@ -12,8 +12,8 @@
         {{ color.name }}
       </v-btn>
     </v-row>
-    <v-label>Filtrer par taille :</v-label>
-    <v-row class="size-buttons d-flex justify-content-center flex-wrap mb-3">
+    <p class="p-3">Filtrer par taille :</p>
+    <v-row class="size-buttons d-flex justify-content-center flex-wrap mb-4">
       <v-btn
         v-for="size in uniqueSizes"
         :key="size.id"

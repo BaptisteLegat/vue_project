@@ -1,11 +1,17 @@
+Copy code
 <template>
   <div class="content-container">
     <Filter @color-selected="updateSelectedColor"></Filter>
     <v-row class="card-grid">
-      <Card class="mt-5" v-for="product in filteredProducts" :key="product.id" :product="product"></Card>
-      <v-col v-if="filteredProducts.length === 0 && products.length !== 0" cols="12" class="no-results-message">Aucun produit correspondant aux couleurs sélectionnées.</v-col>
+      <template v-if="filteredProducts.length > 0">
+        <Card v-for="product in filteredProducts" :key="product.id" :product="product"></Card>
+      </template>
+      <template v-else>
+        <div class="centered-message">
+          <div class="no-results-message">Aucun produit ne correspond à votre recherche.</div>
+        </div>
+      </template>
     </v-row>
-    <v-row v-if="products.length === 0" class="no-results-message">Aucun produit disponible.</v-row>
   </div>
 </template>
 
@@ -17,13 +23,27 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
+  padding: 20px;
 }
 .no-results-message {
   text-align: center;
-  font-weight: bold;
-  margin-top: 20px;
+  font-size: 20px;
+  margin-top: 50px;
 }
 
+.no-results-message::before {
+  content: "😢";
+  display: block;
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+.centered-message {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
 
 <script>

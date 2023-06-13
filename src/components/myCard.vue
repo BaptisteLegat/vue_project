@@ -1,17 +1,17 @@
 <template>
     <div class="container text-center">
-      <v-card class="card border-dark mb-3" @click="detailArticle(product.id)">
-        <v-img :src="product.image" :alt="product.title" class="card-image"></v-img>
+      <v-card class="card bg-blue-grey-lighten-4" @click="detailArticle(product.id)">
+        <v-img :src="product.imageUrl" :alt="product.title" class="card-image"></v-img>
         <v-card-text>
           <h5 class="card-title text-truncate">{{ product.name }}</h5>
           <div class="row">
             <div class="col">
-              <p class="card-text font-weight-bold">Couleur : {{ product.color.name }}</p>
+              <p class="card-text font-weight-bold">{{ product.price }} €</p>
             </div>
           </div>
-          <div class="row">
-            <div class="col p-lg-2">
-              <p class="">Taille : {{ product.size.label }}</p>
+          <div class="row m-2">
+            <div class="col">
+              <p class="card-text font-weight-bold">Couleur : {{ product.color.name }}</p>
             </div>
           </div>
         </v-card-text>
@@ -23,15 +23,7 @@
 .card-image {
     height: 300px;
     object-fit: cover;
-    margin: 0 auto;
     padding: 10px;
-}
-
-.border-dark {
-    max-height: 30rem;
-    max-width: 28rem;
-    margin: 0 auto;
-    border: 1px solid #e2e2e2;
 }
 </style>
 
