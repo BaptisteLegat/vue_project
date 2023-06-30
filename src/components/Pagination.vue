@@ -42,7 +42,7 @@ export default {
   },
   computed: {
     displayedPages() {
-      const pageCount = 5;
+      const pageCount = 7;
       const startPage = Math.max(this.currentPage - Math.floor(pageCount / 2), 1);
       const endPage = Math.min(startPage + pageCount - 1, this.totalPages);
       return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);

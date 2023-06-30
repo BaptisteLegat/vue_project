@@ -60,15 +60,6 @@ export default {
     this.fetchProducts("/api/products?page=1");
   },
   methods: {
-    fetchFilteredProductsColors(colorId) {
-      const apiUrl = colorId ? `/api/products?color=/api/colors/${colorId}` : "/api/products";
-      this.fetchProducts(apiUrl);
-    },
-    
-    fetchFilteredProductsSizes(sizeId) {
-      const apiUrl = sizeId ? `/api/products?size=/api/sizes/${sizeId}` : "/api/products";
-      this.fetchProducts(apiUrl);
-    },
     fetchProducts(apiUrl) {
       this.$emit("loading");
       fetchProducts(apiUrl)
@@ -85,22 +76,42 @@ export default {
       const { colors, sizes } = selections;
       this.selectedColor = colors;
       this.selectedSize = sizes;
-      const colorId = this.selectedColor.length > 0 ? this.selectedColor[0] : null;
-      const sizeId = this.selectedSize.length > 0 ? this.selectedSize[0] : null;
-      this.fetchFilteredProductsSizes(sizeId);
-      this.fetchFilteredProductsColors(colorId);
+
+      let apiUrl = "/api/products?";
+      if (this.selectedColor.length > 0) {
+        apiUrl += "color[]=" + this.selectedColor.map(colorId => `/api/colors/${colorId}`).join("&color[]=");
+      }
+      if (this.selectedSize.length > 0) {
+        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "size[]=" + this.selectedSize.map(sizeId => `/api/sizes/${sizeId}`).join("&size[]=");
+      }
+      apiUrl += (this.selectedColor.length > 0 || this.selectedSize.length > 0 ? "&" : "") + "page=" + this.currentPage;
+      this.fetchProducts(apiUrl);
     },
     performSearch(searchQuery) {
       this.searchQuery = searchQuery;
     },
     handlePageChange(page) {
       this.currentPage = page;
-      const apiUrl = `/api/products?page=${page}`;
+      let apiUrl = "/api/products?";
+      if (this.selectedColor.length > 0) {
+        apiUrl += "color[]=" + this.selectedColor.map(colorId => `/api/colors/${colorId}`).join("&color[]=");
+      }
+      if (this.selectedSize.length > 0) {
+        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "size[]=" + this.selectedSize.map(sizeId => `/api/sizes/${sizeId}`).join("&size[]=");
+      }
+      this.fetchProducts(apiUrl);
     },
     handlePaginationClick(pageNumber) {
       this.currentPage = pageNumber;
-      const apiUrl = `/api/products?page=${pageNumber}`;
+      let apiUrl = `/api/products?page=${pageNumber}`;
+      if (this.selectedColor.length > 0) {
+        apiUrl += "&color[]=" + this.selectedColor.map(colorId => `/api/colors/${colorId}`).join("&color[]=");
+      }
+      if (this.selectedSize.length > 0) {
+        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "size[]=" + this.selectedSize.map(sizeId => `/api/sizes/${sizeId}`).join("&size[]=");
+      }
       this.fetchProducts(apiUrl);
+      console.log(apiUrl);
       this.scrollToTop();
     },
     scrollToTop() {
