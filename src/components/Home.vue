@@ -99,10 +99,14 @@ export default {
         .then(response => {
           this.products = response['hydra:member'].map(item => item);
           this.totalPages = parseInt(response['hydra:view']['hydra:last'].split('page=')[1]);
+
+          const currentPageUrl = response['hydra:view']['@id'];
+          const currentPage = parseInt(currentPageUrl.split('page=')[1]);
+          this.currentPage = currentPage;
         })
         .catch(error => {
           console.error(error);
-        });
+      });
     },
     updateSelectedColor(selections) {
       const { colors, sizes } = selections;
