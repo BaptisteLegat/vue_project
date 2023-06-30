@@ -22,7 +22,7 @@
     </v-btn>
   </div>
 </template>
-  
+
 <script>
 export default {
   props: {
@@ -38,7 +38,7 @@ export default {
   methods: {
     goToPage(pageNumber) {
       this.$emit("page-click", pageNumber);
-    }
+    },
   },
   computed: {
     displayedPages() {
@@ -51,18 +51,18 @@ export default {
 };
 </script>
 
-  <style scoped>
-  .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .pagination-button {
-    margin: 0 5px;
-  }
-  
-  .pagination-button.active {
-    background-color: #ccc;
-  }
-  </style>
+<style scoped>
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  margin: 0 5px;
+}
+
+.pagination-button.active {
+  background-color: #ccc;
+}
+</style>
