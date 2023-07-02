@@ -1,46 +1,78 @@
 <template>
     <div class="container">
-        <div v-if="product === null" class="loading-message">Chargement en cours...</div>
-        <div v-else class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">{{ product.size.label }}</h5>
-                <h6 class="card-subtitle text-muted">Support card subtitle</h6>
-            </div>
+        <div class="widget-wrapper">
+            <v-container>
+                <div v-if="product" class="d-flex gap-12">
+                    <div class="image-column">
+                        <img
+                            src="https://www.largeotetcoltin.com/13677-thickbox/pull-camionneur-le-laboureur.jpg"
+                            class="card-image"
+                        />
+                    </div>
+                    <div class="info-column">
+                        <span class="text-h4">{{ product.name }}</span>
+                        <span>Loremrnrijrfrefijrevj cer jcifer jive ijveinjv eijfvf ijvri jv</span>
+                        <span class="text-h4 text-secondary font-weight-bold"></span>
+                        <p>Taille : {{ product.size.label }}</p>
+                        <p>Couleur : {{ product.color.name }}</p>
 
-            <div class="card-body">
-                <img :src="product.image" :alt="product.title" class="card-image"/>
-                <p class="card-text">{{ product.name }}</p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Vestibulum at eros</li>
-            </ul>
-            <div class="card-body">
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-            </div>
-            <div class="card-footer text-muted">
-                2 days ago
-            </div>
+                        <div class="buttons-group">
+                            <v-btn variant="text">buy now</v-btn>
+                            <v-btn variant="text" @click="$router.back()">
+                                <v-icon start icon="mdi-arrow-left"></v-icon>
+                                Back
+                            </v-btn>
+                        </div>
+                    </div>
+                </div>
+            </v-container>
         </div>
     </div>
-
-
 </template>
 
 <style scoped>
-.loading-message {
-    text-align: center;
-    font-weight: bold;
-    margin-top: 20px;
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
-.card-text{
-    text-align: center;
+
+.widget-wrapper {
+    max-width: 500px;
+    margin: auto;
 }
-.card-image{
+
+.card-image {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.gap-12 {
+    gap: 3rem;
+}
+
+.image-column {
+    flex: 1;
+}
+
+.info-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.buttons-group {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 2em;
 }
 </style>
 
