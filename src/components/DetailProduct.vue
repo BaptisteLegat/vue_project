@@ -3,15 +3,13 @@
         <div class="widget-wrapper">
             <v-container>
                 <div v-if="product" class="d-flex gap-12">
-                    <div class="image-column">
-                        <img
-                            src="https://www.largeotetcoltin.com/13677-thickbox/pull-camionneur-le-laboureur.jpg"
-                            class="card-image"
-                        />
-                    </div>
-                    <div class="info-column">
-                        <span class="text-h4">{{ product.name }}</span>
-                        <span>Loremrnrijrfrefijrevj cer jcifer jive ijveinjv eijfvf ijvri jv</span>
+                    <v-row justify="center">
+                        <v-col cols="auto">
+                            <v-img v-if="product && product.imageUrl" :src="product.imageUrl" height="350"></v-img>
+                        </v-col>
+                        <v-col>
+                        <span class="text-h4">{{ product.name }}</span><br>
+                        <span>Description :</span>
                         <span class="text-h4 text-secondary font-weight-bold"></span>
                         <p>Taille : {{ product.size.label }}</p>
                         <p>Couleur : {{ product.color.name }}</p>
@@ -23,7 +21,8 @@
                                 Back
                             </v-btn>
                         </div>
-                    </div>
+                        </v-col>
+                    </v-row>
                 </div>
             </v-container>
         </div>
