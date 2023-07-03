@@ -15,6 +15,7 @@
       hide-details
       @input="performSearch"
     ></v-text-field>
+    <v-btn @click="performSearch" text>Search</v-btn>
   </v-app-bar>
 </template>
 
@@ -28,8 +29,8 @@ export default {
   },
   methods: {
     performSearch() {
-      this.$emit("search", this.searchQuery);
-    },
+    this.$emit("perform-search", this.searchQuery);
   },
+  }
 };
 </script>

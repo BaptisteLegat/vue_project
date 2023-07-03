@@ -1,6 +1,6 @@
 <template>
   <div class="content-container">
-    <Filter @filter-selected="updateSelectedFilter" @page-change="handlePageChange"></Filter>    
+    <Filter @filter-selected="updateSelectedFilter"></Filter>    
     <v-row class="card-grid">
       <template v-if="filteredProducts.length > 0">
         <Card v-for="product in filteredProducts" :key="product.id" :product="product"></Card>
@@ -65,7 +65,17 @@ export default {
       fetchProducts(apiUrl)
         .then((response) => {
           this.products = response["hydra:member"];
-          this.totalPages = Number(response["hydra:view"]["hydra:last"].match(/page=(\d+)/)[1]);
+          const lastPageLink = response["hydra:view"]["hydra:last"];
+          if (lastPageLink) {
+            const matchResult = lastPageLink.match(/page=(\d+)/);
+            if (matchResult) {
+              this.totalPages = Number(matchResult[1]);
+              } else {
+              this.totalPages = 1;
+            }
+          } else {
+            this.totalPages = 1;
+          }
           this.$emit("loaded");
         })
         .catch((error) => {
@@ -76,29 +86,18 @@ export default {
       const { colors, sizes } = selections;
       this.selectedColor = colors;
       this.selectedSize = sizes;
-
+      this.currentPage = 1;
       let apiUrl = "/api/products?";
       if (this.selectedColor.length > 0) {
         apiUrl += "color[]=" + this.selectedColor.map(colorId => `/api/colors/${colorId}`).join("&color[]=");
+      }
+      if (this.searchQuery !== "") {
+        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "name=" + this.searchQuery;
       }
       if (this.selectedSize.length > 0) {
         apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "size[]=" + this.selectedSize.map(sizeId => `/api/sizes/${sizeId}`).join("&size[]=");
       }
       apiUrl += (this.selectedColor.length > 0 || this.selectedSize.length > 0 ? "&" : "") + "page=" + this.currentPage;
-      this.fetchProducts(apiUrl);
-    },
-    performSearch(searchQuery) {
-      this.searchQuery = searchQuery;
-    },
-    handlePageChange(page) {
-      this.currentPage = page;
-      let apiUrl = "/api/products?";
-      if (this.selectedColor.length > 0) {
-        apiUrl += "color[]=" + this.selectedColor.map(colorId => `/api/colors/${colorId}`).join("&color[]=");
-      }
-      if (this.selectedSize.length > 0) {
-        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "size[]=" + this.selectedSize.map(sizeId => `/api/sizes/${sizeId}`).join("&size[]=");
-      }
       this.fetchProducts(apiUrl);
     },
     handlePaginationClick(pageNumber) {
@@ -108,11 +107,26 @@ export default {
         apiUrl += "&color[]=" + this.selectedColor.map(colorId => `/api/colors/${colorId}`).join("&color[]=");
       }
       if (this.selectedSize.length > 0) {
-        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "size[]=" + this.selectedSize.map(sizeId => `/api/sizes/${sizeId}`).join("&size[]=");
+        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "&size[]=" + this.selectedSize.map(sizeId => `/api/sizes/${sizeId}`).join("&size[]=");
       }
       this.fetchProducts(apiUrl);
-      console.log(apiUrl);
       this.scrollToTop();
+    },
+    handleSearch(searchTerm) {
+      this.searchQuery = searchTerm;
+      this.currentPage = 1;
+      let apiUrl = "/api/products?";
+      if (this.selectedColor.length > 0) {
+        apiUrl += "color[]=" + this.selectedColor.map(colorId => `/api/colors/${colorId}`).join("&color[]=");
+      }
+      if (this.searchQuery !== "") {
+        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "name=" + this.searchQuery;
+      }
+      if (this.selectedSize.length > 0) {
+        apiUrl += (this.selectedColor.length > 0 || this.searchQuery !== "" ? "&" : "") + "size[]=" + this.selectedSize.map(sizeId => `/api/sizes/${sizeId}`).join("&size[]=");
+      }
+      apiUrl += (this.selectedColor.length > 0 || this.selectedSize.length > 0 || this.searchQuery !== "" ? "&" : "") + "page=" + this.currentPage;
+      this.fetchProducts(apiUrl);
     },
     scrollToTop() {
       const scrollToTop = () => {

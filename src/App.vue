@@ -1,6 +1,6 @@
 <template>
     <v-app id="app">
-      <Header @search="performSearch"></Header>
+      <Header @perform-search="handleSearch"></Header>
 
       <router-view></router-view>
     </v-app>
