@@ -27,8 +27,8 @@ export default {
   },
   methods: {
     performSearch() {
-    this.$emit("perform-search", this.searchQuery);
-  },
+      this.$emit("search", this.searchQuery);
+    },
   }
 };
 </script>
