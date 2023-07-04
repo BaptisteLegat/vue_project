@@ -1,5 +1,6 @@
     import { createRouter, createWebHistory } from "vue-router";
     import DetailProduct from "@/components/DetailProduct.vue";
+    // routes sert à définir les routes de notre application
     const routes = [
         {
             path: "/",

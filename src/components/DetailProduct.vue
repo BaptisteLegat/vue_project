@@ -2,9 +2,11 @@
     <div class="container">
         <div class="widget-wrapper">
             <v-container>
+                <!-- Si le produit existe on affiche les informations -->
                 <div v-if="product" class="d-flex gap-12">
                     <v-row justify="center">
                         <v-col cols="auto">
+                            <!-- Si l'image existe on l'affiche -->
                             <v-img v-if="product && product.imageUrl" :src="product.imageUrl" height="350"></v-img>
                         </v-col>
                         <v-col>
@@ -28,6 +30,40 @@
         </div>
     </div>
 </template>
+
+<script>
+import { fetchProductById } from '../stores/api';
+
+export default {
+    name: 'DetailProduct',
+    // data est une fonction qui retourne un objet
+    // product est initialisé à null
+    data() {
+        return {
+            product: null,
+        };
+    },
+    // mounted est une fonction qui s'exécute lorsque le composant est monté
+    // on récupère l'id du produit dans l'url
+    // on appelle la fonction fetchProduct en lui passant l'id du produit
+    mounted() {
+        const productId = this.$route.params.id;
+        this.fetchProduct(productId);
+    },
+    // on crée une méthode fetchProduct qui appelle la fonction fetchProductById
+    methods: {
+        fetchProduct(productId) {
+            fetchProductById(productId)
+                .then(response => {
+                    this.product = response;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        },
+    },
+};
+</script>
 
 <style scoped>
 .container {
@@ -74,32 +110,3 @@
     gap: 2em;
 }
 </style>
-
-<script>
-import { fetchProductById } from '../stores/api';
-
-export default {
-    name: 'DetailProduct',
-    data() {
-        return {
-            product: null,
-        };
-    },
-    mounted() {
-        const productId = this.$route.params.id;
-        this.fetchProduct(productId);
-    },
-    methods: {
-        fetchProduct(productId) {
-            fetchProductById(productId)
-                .then(response => {
-                    this.product = response;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        },
-    },
-};
-
-</script>
