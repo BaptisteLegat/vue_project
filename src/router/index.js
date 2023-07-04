@@ -1,45 +1,63 @@
 import { createRouter, createWebHistory } from "vue-router";
 import DetailProduct from "@/components/DetailProduct.vue";
+import Home from "@/components/Home.vue";
 import Login from "@/components/Login.vue";
 
-let loggedIn = false;
+// Vérifie si l'utilisateur est connecté
+function isAuthenticated() {
+    return localStorage.getItem("loggedIn") === "true";
+}
 
-// routes sert à définir les routes de notre application
+// Redirige vers la page de connexion si l'utilisateur n'est pas authentifié
+function requireAuth(to, from, next) {
+    if (!isAuthenticated()) {
+        next({ name: "Login" });
+    } else {
+        next();
+    }
+}
+
+// Redirige vers la page d'accueil si l'utilisateur est déjà authentifié
+function redirectToHome(to, from, next) {
+    if (isAuthenticated()) {
+        next({ name: "Home" });
+    } else {
+        next();
+    }
+}
+
 const routes = [
     {
         path: "/",
         name: "Home",
-        component: () => import("../components/Home.vue")
+        component: Home,
+        beforeEnter: requireAuth,
     },
     {
         path: "/detailProduct/:id",
         name: "DetailProduct",
-        component: DetailProduct
+        component: DetailProduct,
+        beforeEnter: requireAuth,
     },
     {
         path: "/login",
         name: "Login",
-        component: Login
-    }
+        component: Login,
+        beforeEnter: redirectToHome,
+    },
 ];
 
 const router = createRouter({
     history: createWebHistory("/"),
-    routes
+    routes,
 });
 
-// Fonction pour définir la valeur de loggedIn
+// Définit l'état de connexion de l'utilisateur
 export function setLoggedIn(value) {
-    loggedIn = value;
+    localStorage.setItem("loggedIn", value.toString());
 }
 
-// Ajout de la redirection vers la page "Login" par défaut
-router.beforeEach((to, from, next) => {
-    if (to.name !== 'Login' && !loggedIn) {
-        next({ name: 'Login' });
-    } else {
-        next();
-    }
-});
+// Récupère l'état de connexion de l'utilisateur lors du chargement de l'application
+const loggedIn = isAuthenticated();
 
 export default router;
