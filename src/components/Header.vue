@@ -3,7 +3,6 @@
     <v-toolbar-title>MyShop</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn to="/" text>Home</v-btn>
-    <v-btn to="/login" text>Login</v-btn>
     <v-btn to="/logout" text>Logout</v-btn>
     <v-btn to="/profile" text>Profile</v-btn>
     <!--  v-model permet de lier la valeur de searchQuery au champ de recherche,
