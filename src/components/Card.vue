@@ -25,7 +25,7 @@
   </template>
 <script>
 export default {
-    name: "myCard",
+    name: "Card",
     // on récupère le produit passé en props
     props: {
         product: {

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Card from "./myCard.vue";
+import Card from "./Card.vue";
 import { fetchProducts } from "../stores/api";
 import Filter from "./Filter.vue";
 import Pagination from "./Pagination.vue";
