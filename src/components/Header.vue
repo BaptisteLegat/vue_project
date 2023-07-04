@@ -4,7 +4,6 @@
     <v-spacer></v-spacer>
     <v-btn to="/" text>Home</v-btn>
     <v-btn to="/login" text>Login</v-btn>
-    <v-btn to="/register" text>Register</v-btn>
     <v-btn to="/logout" text>Logout</v-btn>
     <v-btn to="/profile" text>Profile</v-btn>
     <v-text-field
@@ -15,7 +14,6 @@
       hide-details
       @input="performSearch"
     ></v-text-field>
-    <v-btn @click="performSearch" text>Search</v-btn>
   </v-app-bar>
 </template>
 
@@ -29,8 +27,8 @@ export default {
   },
   methods: {
     performSearch() {
-    this.$emit("perform-search", this.searchQuery);
-  },
+      this.$emit("search", this.searchQuery);
+    },
   }
 };
 </script>

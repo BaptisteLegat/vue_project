@@ -39,6 +39,17 @@ export default {
       itemsPerPage: 30,
     };
   },
+  props: {
+    searchValue: {
+      type: String,
+      default: "",
+    },
+  },
+  watch: {
+    searchValue(newValue) {
+      this.performSearch(newValue);
+    },
+  },
   computed: {
     filteredProducts() {
       if (this.selectedColor === '' && this.selectedSize === '' && this.searchQuery === '') {
@@ -92,7 +103,7 @@ export default {
         apiUrl += "color[]=" + this.selectedColor.map(colorId => `/api/colors/${colorId}`).join("&color[]=");
       }
       if (this.searchQuery !== "") {
-        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "name=" + this.searchQuery;
+        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "&name=" + this.searchQuery;
       }
       if (this.selectedSize.length > 0) {
         apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "size[]=" + this.selectedSize.map(sizeId => `/api/sizes/${sizeId}`).join("&size[]=");
@@ -106,27 +117,33 @@ export default {
       if (this.selectedColor.length > 0) {
         apiUrl += "&color[]=" + this.selectedColor.map(colorId => `/api/colors/${colorId}`).join("&color[]=");
       }
+      if (this.searchQuery !== "") {
+        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "&name=" + this.searchQuery;
+      }
       if (this.selectedSize.length > 0) {
         apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "&size[]=" + this.selectedSize.map(sizeId => `/api/sizes/${sizeId}`).join("&size[]=");
       }
       this.fetchProducts(apiUrl);
       this.scrollToTop();
     },
-    handleSearch(searchTerm) {
-      this.searchQuery = searchTerm;
-      this.currentPage = 1;
+    performSearch(searchValue) {
+      this.searchQuery = searchValue || "";
+      let apiUrl = this.buildApiUrl();
+      this.fetchProducts(apiUrl);
+    },
+    buildApiUrl() {
       let apiUrl = "/api/products?";
       if (this.selectedColor.length > 0) {
         apiUrl += "color[]=" + this.selectedColor.map(colorId => `/api/colors/${colorId}`).join("&color[]=");
       }
       if (this.searchQuery !== "") {
-        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "name=" + this.searchQuery;
+        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "name=" + this.searchQuery + "&";
       }
       if (this.selectedSize.length > 0) {
-        apiUrl += (this.selectedColor.length > 0 || this.searchQuery !== "" ? "&" : "") + "size[]=" + this.selectedSize.map(sizeId => `/api/sizes/${sizeId}`).join("&size[]=");
+        apiUrl += (this.selectedColor.length > 0 ? "&" : "") + "size[]=" + this.selectedSize.map(sizeId => `/api/sizes/${sizeId}`).join("&size[]=");
       }
-      apiUrl += (this.selectedColor.length > 0 || this.selectedSize.length > 0 || this.searchQuery !== "" ? "&" : "") + "page=" + this.currentPage;
-      this.fetchProducts(apiUrl);
+      apiUrl += (this.selectedColor.length > 0 || this.selectedSize.length > 0 ? "&" : "") + "page=" + this.currentPage;
+      return apiUrl;
     },
     scrollToTop() {
       const scrollToTop = () => {

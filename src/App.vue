@@ -1,14 +1,11 @@
 <template>
     <v-app id="app">
-      <Header @perform-search="handleSearch"></Header>
-
-      <router-view></router-view>
+        <Header @search="updateSearchQuery"></Header>
+        <router-view :search-value="searchQuery"></router-view>
     </v-app>
-  </template>
+</template>
 
 <script>
-
-
 import Header from "@/components/Header.vue";
 
 export default {
@@ -16,10 +13,15 @@ export default {
     components: {
         Header,
     },
-    
+    data() {
+        return {
+            searchQuery: "",
+        };
+    },
+    methods: {
+        updateSearchQuery(searchValue) {
+            this.searchQuery = searchValue;
+        },
+    },
 };
 </script>
-
-<style>
-/* Styles spécifiques à App.vue */
-</style>
