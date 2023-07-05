@@ -11,7 +11,7 @@
           @click="toggleColor(color.id)"
         >
           <!-- on affiche un cercle de la couleur et le nom de la couleur -->
-          <v-chip class="color-circle d-inline-block me-1" :style="{ backgroundColor: color.name }"></v-chip>
+          <v-chip class="color-circle me-1 h-auto" :style="{ backgroundColor: color.name}"></v-chip>
           {{ color.name }}
         </v-btn>
       </v-row>
@@ -117,9 +117,8 @@
 
   <style scoped>
   .btn-color {
-    padding: 5px 10px;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 14px; 
   }
 
   .btn-size {
@@ -137,11 +136,7 @@
   }
 
   .color-circle {
-    width: 20px;
-    height: 20px;
     border-radius: 50%;
     display: inline-block;
-    border: 1px solid #e2e2e2;
-    margin-right: 5px;
   }
   </style>

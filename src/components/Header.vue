@@ -4,7 +4,6 @@
         <v-spacer></v-spacer>
         <v-btn to="/" text>Home</v-btn>
         <v-btn @click="logout" text>Logout</v-btn>
-        <v-btn to="/profile" text>Profile</v-btn>
         <v-text-field
                 v-model="searchQuery"
                 append-icon="mdi-magnify"
