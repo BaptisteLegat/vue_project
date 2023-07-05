@@ -3,7 +3,7 @@
     <!-- ici on appelle le composant Filter, @filter-selected 
       permet de passer les valeurs de selectedColors et selectedSizes au composant Home -->
     <Filter @filter-selected="updateSelectedFilter"></Filter>    
-    <v-row class="card-grid">
+    <v-row class="card-grid justify-center">
       <!-- Afficher la roue de chargement pendant 2 secondes -->
       <div v-if="loading">
         <v-progress-circular indeterminate class="loading" color="indigo"></v-progress-circular>
@@ -229,4 +229,7 @@ export default {
   justify-content: center;
 }
 
+.justify-center {
+    justify-content: center;
+}
 </style>

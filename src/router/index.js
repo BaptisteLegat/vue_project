@@ -57,7 +57,5 @@ export function setLoggedIn(value) {
     localStorage.setItem("loggedIn", value.toString());
 }
 
-// Récupère l'état de connexion de l'utilisateur lors du chargement de l'application
-const loggedIn = isAuthenticated();
-
+isAuthenticated();
 export default router;

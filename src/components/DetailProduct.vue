@@ -11,13 +11,11 @@
                         </v-col>
                         <v-col>
                         <span class="text-h4">{{ product.name }}</span><br>
-                        <span>Description :</span>
                         <span class="text-h4 text-secondary font-weight-bold"></span>
                         <p>Taille : {{ product.size.label }}</p>
                         <p>Couleur : {{ product.color.name }}</p>
 
                         <div class="buttons-group">
-                            <v-btn variant="text">buy now</v-btn>
                             <v-btn variant="text" @click="$router.back()">
                                 <v-icon start icon="mdi-arrow-left"></v-icon>
                                 Back

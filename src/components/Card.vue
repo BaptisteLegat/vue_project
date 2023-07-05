@@ -1,5 +1,5 @@
 <template>
-    <div class="container text-center">
+    <div class="d-inline-block text-center">
       <!--lorsqu'on clique sur une card, on appelle la fonction detailArticle-->
       <v-card class="card bg-blue-grey-lighten-4" @click="detailArticle(product.id)">
         <!--v-img permet d'afficher une image
@@ -44,8 +44,14 @@ export default {
 
 <style scoped>
 .card-image {
-    height: 300px;
+    height: 250px;
     object-fit: cover;
     padding: 10px;
+}
+
+.d-inline-block {
+    display: inline-block;
+    margin-right: 10px; /* Ajoutez une marge droite si nécessaire */
+    margin-bottom: 10px; /* Ajoutez une marge inférieure si nécessaire */
 }
 </style>
