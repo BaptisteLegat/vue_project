@@ -136,6 +136,16 @@ La route contient un paramètre qui permet de récupérer l'id du produit. Cet i
 
 #### **Login.vue**
 
+Le composant Login.vue est le composant qui permet de se connecter à l'application.
+ELle contient un _v-form_ qui est un formulaire de connexion.
+Il a un attribut _@submit_ qui permet de soumettre le formulaire.
+Pour ce connecté il faut un email et un mot de passe.
+Il y a une route API pour se connecter à l'application (**api/login_check**).
+Cette route prend en paramètre un email et un mot de passe.
+Une fois connecté, l'utilisateur est redirigé vers la page d'accueil.
+Un état de connexion est stocké dans le store de l'application.
+
+
 ### Explication du router (Résumé)
 
 #### **index.js**
@@ -143,6 +153,7 @@ La route contient un paramètre qui permet de récupérer l'id du produit. Cet i
 Le fichier index.js contient le store de l'application.
 Il contient les routes de l'application et les modules.
 C'est lui qui gère le login de l'utilisateur.
+Il va également stocker l'état de connexion de l'utilisateur.
 
 ### Explication du store (Résumé)
 

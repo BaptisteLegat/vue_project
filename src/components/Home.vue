@@ -4,16 +4,20 @@
       permet de passer les valeurs de selectedColors et selectedSizes au composant Home -->
     <Filter @filter-selected="updateSelectedFilter"></Filter>    
     <v-row class="card-grid">
-      <!-- ici on boucle sur filteredProducts qui est une propriété calculée -->
-      <template v-if="filteredProducts.length > 0">
-        <!-- on affiche le composant Card pour chaque produit avec les données du produit -->
-        <Card v-for="product in filteredProducts" :key="product.id" :product="product"></Card>
-      </template>
-      <!-- si filteredProducts est vide on affiche un message défini -->
+      <!-- Afficher la roue de chargement pendant 2 secondes -->
+      <div v-if="loading">
+        <v-progress-circular indeterminate class="loading" color="indigo"></v-progress-circular>
+      </div>
+      <!-- Afficher les produits lorsque loading est faux -->
       <template v-else>
-        <div class="centered-message">
-          <div class="no-results-message">Aucun produit ne correspond à votre recherche.</div>
-        </div>
+        <template v-if="filteredProducts.length > 0">
+          <Card v-for="product in filteredProducts" :key="product.id" :product="product"></Card>
+        </template>
+        <template v-else>
+          <div class="centered-message">
+            <div class="no-results-message">Aucun produit ne correspond à votre recherche.</div>
+          </div>
+        </template>
       </template>
     </v-row>
     <!-- ici on appelle le composant Pagination, @page-click permet de passer la valeur de currentPage au composant Home -->
@@ -43,6 +47,7 @@ export default {
       currentPage: 1,
       totalPages: 1, 
       itemsPerPage: 30,
+      loading: false,
     };
   },
   // props permet de définir des propriétés qui seront passées au composant
@@ -87,7 +92,7 @@ export default {
   methods: {
     // cette fonction permet de récupérer les produits en fonction de l'url
     fetchProducts(apiUrl) {
-      this.$emit("loading");
+      this.loading = true;
       fetchProducts(apiUrl)
         .then((response) => {
           // response est un objet qui contient les données de la réponse de l'api
@@ -105,10 +110,13 @@ export default {
           } else {
             this.totalPages = 1;
           }
-          this.$emit("loaded");
+          setTimeout(() => {
+            this.loading = false; // Désactiver le chargement après 2 secondes
+          }, 2000);
         })
         .catch((error) => {
           console.log(error);
+          this.loading = false;
         });
     },
     // cette fonction permet de mettre à jour les valeurs de selectedColor et selectedSize et
@@ -214,4 +222,11 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
+.loading {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+}
+
 </style>
