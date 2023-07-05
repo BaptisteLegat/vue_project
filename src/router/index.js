@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import DetailProduct from "@/components/DetailProduct.vue";
-import Home from "@/components/Home.vue";
 import Login from "@/components/Login.vue";
+import Home from "@/components/Home.vue";
 
-// Vérifie si l'utilisateur est connecté
+
 function isAuthenticated() {
     return localStorage.getItem("loggedIn") === "true";
 }
@@ -25,7 +25,6 @@ function redirectToHome(to, from, next) {
         next();
     }
 }
-
 const routes = [
     {
         path: "/",
@@ -49,7 +48,7 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory("/"),
-    routes,
+    routes
 });
 
 // Définit l'état de connexion de l'utilisateur
@@ -58,6 +57,5 @@ export function setLoggedIn(value) {
 }
 
 // Récupère l'état de connexion de l'utilisateur lors du chargement de l'application
-const loggedIn = isAuthenticated();
-
+isAuthenticated();
 export default router;
