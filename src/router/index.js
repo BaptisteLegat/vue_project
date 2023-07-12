@@ -5,7 +5,11 @@ import Login from "@/components/Login.vue";
 
 // Vérifie si l'utilisateur est connecté
 function isAuthenticated() {
-    return localStorage.getItem("loggedIn") === "true";
+    if (localStorage.getItem("token")) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // Redirige vers la page de connexion si l'utilisateur n'est pas authentifié
@@ -52,10 +56,5 @@ const router = createRouter({
     routes,
 });
 
-// Définit l'état de connexion de l'utilisateur
-export function setLoggedIn(value) {
-    localStorage.setItem("loggedIn", value.toString());
-}
 
-isAuthenticated();
 export default router;
