@@ -149,7 +149,7 @@ Pour ce connecté il faut un email et un mot de passe.
 Il y a une route API pour se connecter à l'application (**api/login_check**).
 Cette route prend en paramètre un email et un mot de passe.
 Une fois connecté, l'utilisateur est redirigé vers la page d'accueil.
-Un état de connexion est stocké dans le store de l'application.
+Un token de connexion est stocké dans le store de l'application et permet de savoir si l'utilisateur est connecté ou non.
 
 
 ### Explication du router (Résumé)
