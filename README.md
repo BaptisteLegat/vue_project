@@ -41,8 +41,10 @@ Le projet est composé de **3 pages** :
 - La page de détail
 
 La page de login permet de se connecter à l'application.
-Voici les identifiants pour se connecter : 
+Voici les identifiants pour se connecter :
+
 email: bobby@bob.com
+
 mot de passe: bobby1234
 
 La page d'accueil permet de voir tous les produits de l'API.
